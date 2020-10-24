@@ -43,6 +43,33 @@ app.get('/movies/create', function (req, res) {
 app.get('/movies/read/',(req,res) => {
   res.send({status:200, data:movies})
 })
+//step 6
+app.get('/movies/read/:order',(req,res) => {
+ var order=req.params.order;
+ if(order=="by-date"){
+  keysSorted = movies.sort((a, b) => a.year - b.year)
+   res.send({data:keysSorted}); 
+ }
+ if(order=="by-rating"){
+  keysSorted = movies.sort((a, b) => a.rating - b.rating)
+  res.send({data:keysSorted}); 
+ }
+ if(order=="by-title"){
+  keysSorted = movies.sort((a, b) =>{
+    var a = a.title.toLowerCase();
+    var b = b.title.toLowerCase();
+    if (a < b) {
+        return -1;
+    }
+    if (a > b) {
+        return 1;
+    }
+    return 0;
+  })
+  res.send({data:keysSorted}); 
+
+ }
+})
 app.get('/movies/update', function (req, res) {
   res.send('{status:200, message:update}'); //or use req.param('id')
 })
