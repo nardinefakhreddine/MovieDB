@@ -15,3 +15,18 @@ var time = today.getHours() + ":" + today.getSeconds();
 app.get('/time', function (req, res) {
   res.send('{status:200, message:'+time+'}'  )
 })
+
+app.get('/hello/:id', function (req, res) {
+  res.send('{status:200, message:Hello,'+req.params.id+'}'); //or use req.param('id')
+})
+app.get('/hello', function (req, res) {
+  res.send('{status:200, message:Hello}'); //or use req.param('id')
+})
+app.get('/search', (req, res)=>{
+  if(req.query.s) {
+   res.send('{status:200, message:"ok" ,data:'+req.query.s+'}');
+  }
+  else {
+    res.send('{status:500, error:true, message:you have to provide a search}');
+  }
+})
