@@ -70,6 +70,17 @@ app.get('/movies/read/:order',(req,res) => {
 
  }
 })
+app.get('/movies/read/id/:ID',(req,res) => {
+  let id = req.params.ID
+ 
+
+  if(id > 0 && id< movies.length ) {
+      res.send({status:200, message:movies[id-1]})
+  }
+  else {
+      res.send({status:404, error:true, message:'the movie ID :['+id+'] does not exist'})
+  }
+})
 app.get('/movies/update', function (req, res) {
   res.send('{status:200, message:update}'); //or use req.param('id')
 })
