@@ -86,7 +86,7 @@ app.get('/movies/update/:ID',(req,res) => {
   let title = req.query.title
   let year = req.query.year
   let rating = req.query.rating
-  
+
   if(id > 0 && id < movies.length ) {
     if(title != undefined || title == "") {
       movies[id-1]['title'] = title;
@@ -98,9 +98,10 @@ app.get('/movies/update/:ID',(req,res) => {
 if(rating != undefined ||rating == "") {
   movies[id-1]['rating'] = rating;
 }
+res.send({status:200, message: movies})
 }
   else {
-      res.send({status:404, error:true, message:'the movie <ID> does not exist'})
+    res.send({status:404, error:true, message:'the movie ID :['+id+'] does not exist'})
   }
 
 })
