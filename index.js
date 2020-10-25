@@ -1,11 +1,14 @@
-const express = require('express')
-const app = express()
-const port = 3000
+var express = require('express')
+
+const app = express();
+const port = 3000;
+
 app.get('/', function (req, res) {
-  res.send('ok')
+ res.send('ok')
 })
+
   app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`app listening at http://localhost:${port}`)
 })
 app.get('/test', function (req, res) {
   res.send('{status:200, message:"ok"}'  )
@@ -37,7 +40,7 @@ const movies = [
   { title: 'الإرهاب والكباب‎', year: 1992, rating: 6.2 }
 ]
 //create part
-app.get('/movies/create', function (req, res) {
+app.post('/movies/create', function (req, res) {
   res.send('{status:200, message:create}'); //or use req.param('id')
 })
 app.get('/movies/read/',(req,res) => {
@@ -81,7 +84,7 @@ app.get('/movies/read/id/:ID',(req,res) => {
 })
 
 
-app.get('/movies/update/:ID',(req,res) => {
+app.put('/movies/update/:ID',(req,res) => {
   let id= req.params.ID
   let title = req.query.title
   let year = req.query.year
@@ -107,7 +110,7 @@ res.send({status:200, message: movies})
 })
  
 
-app.get('/movies/delete/:ID',(req,res) => {
+app.delete('/movies/delete/:ID',(req,res) => {
   var id = req.params.ID
   if (id> 0 && id < movies.length ) {
       movies.splice(id-1, 1)
@@ -117,7 +120,7 @@ app.get('/movies/delete/:ID',(req,res) => {
       res.send({status:404, error:true, message:'the movie ID: ['+id+'] does not exist'})
   }
   }) 
-app.get('/movies/add',(req,res) => {
+app.post('/movies/add',(req,res) => {
   var title = req.query.title
   var year= req.query.year
   var rating = req.query.rating
@@ -133,6 +136,6 @@ app.get('/movies/add',(req,res) => {
 app.get('movies/get', function (req, res) {
   res.send('{status:200, message:get}'); //or use req.param('id')
 })
-app.get('/movies/edit', function (req, res) {
+app.put('/movies/edit', function (req, res) {
   res.send('{status:200, message:edit}'); //or use req.param('id')
-})
+});
