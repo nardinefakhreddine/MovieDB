@@ -36,14 +36,14 @@ const movies = [
   { title: 'Brazil', year: 1985, rating: 8 },
   { title: 'الإرهاب والكباب‎', year: 1992, rating: 6.2 }
 ]
-//step 5
+//create part
 app.get('/movies/create', function (req, res) {
   res.send('{status:200, message:create}'); //or use req.param('id')
 })
 app.get('/movies/read/',(req,res) => {
   res.send({status:200, data:movies})
 })
-//step 6
+// start Read part
 app.get('/movies/read/:order',(req,res) => {
  var order=req.params.order;
  if(order=="by-date"){
@@ -72,8 +72,6 @@ app.get('/movies/read/:order',(req,res) => {
 })
 app.get('/movies/read/id/:ID',(req,res) => {
   let id = req.params.ID
- 
-
   if(id > 0 && id< movies.length ) {
       res.send({status:200, message:movies[id-1]})
   }
@@ -81,15 +79,26 @@ app.get('/movies/read/id/:ID',(req,res) => {
       res.send({status:404, error:true, message:'the movie ID :['+id+'] does not exist'})
   }
 })
+
 app.get('/movies/update', function (req, res) {
   res.send('{status:200, message:update}'); //or use req.param('id')
 })
 app.get('/movies/delete', function (req, res) {
   res.send('{status:200, message:delete}'); //or use req.param('id')
 })
-app.get('movies/add', function (req, res) {
-  res.send('{status:200, message:add}'); //or use req.param('id')
-})
+app.get('/movies/add',(req,res) => {
+  var title = req.query.title
+  var year= req.query.year
+  var rating = req.query.rating
+  if( year == undefined || year.length > 4 || isNaN(year) || title == undefined) {
+      res.send({status:403, error:true, message:'you cannot create a movie without providing a title and a year'})
+  }
+  if (rating == "" || rating== undefined) {
+      rating = 4
+  }
+  movies.push({title: title, year: year, rating: rating})
+      res.send({status:200, data:movies})
+  })
 app.get('movies/get', function (req, res) {
   res.send('{status:200, message:get}'); //or use req.param('id')
 })
